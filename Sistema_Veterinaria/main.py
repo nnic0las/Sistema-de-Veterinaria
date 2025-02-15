@@ -53,18 +53,22 @@ class SistemaVeterianaria:
             nombre_mascota = input("por favor ingrese el nombre de la mascota: ")
             especie = input("por favor ingrese la especie: ")
             raza = input("por favor ingrse la raza: ")
-            mascota = SistemaVeterianaria.Mascota(nombre_mascota, especie, raza)
+            edad = input("Por favor digite la edad de la mascota: ")
+            mascota = SistemaVeterianaria.Mascota(nombre_mascota, especie, raza, edad)
 
             cliente.agregar_mascota(mascota)
 
             clientes.append(cliente)
             print("Cliente y mascota agregados con exito...")
-
-
         
         def programar_cita():
-            pass
+            cliente_id = int(input("Ingrese el ID del cliente: "))
+            cliente = next((c for c in clientes if c.id == cliente_id),None)
 
+            if not clientes:
+                print("Cliente no encontrado")
+                return
+            
         def consultar_historial():
             pass
 
@@ -75,21 +79,18 @@ class SistemaVeterianaria:
                 print("2. Programar cita")
                 print("3. Consultar historial de servicios")
                 print("4. salir")
-                opc = input("Seleccione una opcion: ")
+                opc = input("Seleccione una opcion: ").strip()
 
                 if opc == "1":
-                    registrar_cliente()                   
+                    registrar_cliente()               
                 elif opc == "2":
-                    pass
+                    programar_cita()
                 elif opc == "3":
                     pass
                 elif opc == "4":
-                    pass
+                    break
                 else:
                     print("Opcion no valida.")
                     print("Por favor digite una de las occiones dentro del menu...")
 
-menu_principal()
-
-
-
+        menu_principal()
