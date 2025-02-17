@@ -43,8 +43,7 @@ class SistemaVeterianaria:
             else:
                 print(f"Historial de las citas para {self.nombre}:")
                 for cita in self.historial_clinico:
-                    print(f" - {cita.fecha} a las {cita.hora}, servicio: {cita.servicio},
-                    Veterinario: {cita.veterinario}")
+                    print(f" - {cita.fecha} a las {cita.hora}, servicio: {cita.servicio}, Veterinario: {cita.veterinario}")
 
     class Cita:
         id_counter = 1 
