@@ -181,6 +181,9 @@ class SistemaVeterianaria:
                 tk.Button(self.root, text="Programar Cita", command="",font=("ADLaM Display",10)).pack(pady=5)
                 tk.Button(self.root, text="Consultal Historial de Citas", command="",font=("ADLaM Display",10)).pack(pady=5)
                 tk.Button(self.root, text="salir", command="",font=("ADLaM Display",10)).pack(pady=5)
+            
+            def registrar_cliente():
+                pass
 
 
 
