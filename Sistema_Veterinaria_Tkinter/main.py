@@ -1,3 +1,7 @@
+import tkinter as tk
+from tkinter import ttk, messagebox
+from datetime import datetime
+
 clientes = []
 mascotas = []
 
@@ -38,12 +42,7 @@ class SistemaVeterianaria:
             self.historial_clinico.append(cita)
 
         def mostrar_historial(self):
-            if not self.historial_clinico:
-                print(f"No hay citas registradas  para {self.nombre}") 
-            else:
-                print(f"Historial de las citas para {self.nombre}:")
-                for cita in self.historial_clinico:
-                    print(f" - {cita.fecha} a las {cita.hora}, servicio: {cita.servicio}, Veterinario: {cita.veterinario}")
+            return self.historial_clinico
 
     class Cita:
         id_counter = 1 
@@ -156,28 +155,37 @@ class SistemaVeterianaria:
             
             mascota.mostrar_historial()
 
-        def menu_principal():
-            while True:
-                print("=-=-=-=-Menu principal-=-=-=-=")
-                print("1. Registrar cliente")
-                print("2. Registrar mascota")
-                print("3. Programar cita")
-                print("4. Consultar historial de servicios")
-                print("5. salir")
-                opc = input("Seleccione una opcion: ").strip()
+        #intefaz de usuario (tkinter)
+        class VeterinariaApp:
+            def __init__(self, root):
+                self.root = root
+                self.root.title("Sistema Veterinaria")
+                self.root.geometry("500x600")
 
-                if opc == "1":
-                    registrar_cliente()
-                elif opc == "2":
-                    registrar_mascota()
-                elif opc == "3":
-                    programar_cita()
-                elif opc == "4":
-                    pass
-                elif opc == "5":
-                    break
-                else:
-                    print("Opcion no valida.")
-                    print("Por favor digite una de las occiones dentro del menu...")
+                self.clientes = clientes
+                self.mascotas = mascotas
 
-        menu_principal()
+                self.main_menu()
+
+            def clear_window(self):
+                for widget in self.root.winfo_children():
+                    widget.destroy()
+
+            def main_menu(self):
+                self.clear_window()
+                
+                tk.Label(self.root, text="Sistema de Veterinaria", font=("Arial Black", 16)).pack(pady=10)
+
+                tk.Button(self.root, text="Registrar Cliente", command="", font=("ADLaM Display",10)).pack(pady=5)
+                tk.Button(self.root, text="Registrar Mascota", command="",font=("ADLaM Display",10)).pack(pady=5)
+                tk.Button(self.root, text="Programar Cita", command="",font=("ADLaM Display",10)).pack(pady=5)
+                tk.Button(self.root, text="Consultal Historial de Citas", command="",font=("ADLaM Display",10)).pack(pady=5)
+                tk.Button(self.root, text="salir", command="",font=("ADLaM Display",10)).pack(pady=5)
+
+
+
+        root = tk.Tk()
+        app = VeterinariaApp(root)
+        root.mainloop()
+
+
