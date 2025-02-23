@@ -74,35 +74,23 @@ class SistemaVeterianaria:
                 return False
 
         #funciones del sistema
-        def registrar_cliente():
-            print("-_-_-_-_REGISTRO DE CLIENTES_-_-_-_-")
-            nombre = input("por favor ingrese el nombre del cliente: ").strip()
-            contacto = input("por favor ingrese el contaco del cliente: ").strip()
-            direccion = input("por favor ingrese la direccion del cliente: ").strip()
+        def registrar_cliente(nombre, contacto, direccion):
             cliente = SistemaVeterianaria.Cliente(nombre, contacto, direccion)
             clientes.append(cliente)
-            print(f"Cliente registrado con exito. ID: {cliente.id}")
+            messagebox.showinfo("Exito",f"Cliente registrado con exito. ID: {cliente.id}")
 
-        def registrar_mascota():
-            print("--------REGISTRO DE MASCOTAS--------")
-
-            cliente_id = int(input("Ingrese el ID del cliente para vincular a la mascota: ").strip())
+        def registrar_mascota(cliente_id, nombre_mascota, especie, raza, edad ):
             cliente = next((c for c in clientes if c.id == cliente_id), None)
 
             if not cliente:
-                print("cliente no encontrado")
+                messagebox.showerror("Error", "Cliente no encontrado.")
                 return
 
-            nombre_mascota = input("por favor ingrese el nombre de la mascota: ").strip()
-            especie = input("por favor ingrese la especie: ").strip()
-            raza = input("por favor ingrse la raza: ").strip()
-            edad = int(input("Por favor digite la edad de la mascota: ").strip())  
             mascota = SistemaVeterianaria.Mascota(nombre_mascota, especie, raza, edad)
-            
-
             cliente.agregar_mascota(mascota)
             mascotas.append(mascota)
-            print(f"Mascota registrada con exito, ID : {mascota.id}")
+
+            messagebox.showinfo("Exito",f"Mascota registrada con exito, ID : {mascota.id}")
         
         def programar_cita():
             cliente_id = int(input("Ingrese el ID del cliente: ").strip())
@@ -176,14 +164,78 @@ class SistemaVeterianaria:
                 
                 tk.Label(self.root, text="Sistema de Veterinaria", font=("Arial Black", 16)).pack(pady=10)
 
-                tk.Button(self.root, text="Registrar Cliente", command="", font=("ADLaM Display",10)).pack(pady=5)
+                tk.Button(self.root, text="Registrar Cliente", command=self.registrar_cliente, font=("ADLaM Display",10)).pack(pady=5)
                 tk.Button(self.root, text="Registrar Mascota", command="",font=("ADLaM Display",10)).pack(pady=5)
                 tk.Button(self.root, text="Programar Cita", command="",font=("ADLaM Display",10)).pack(pady=5)
                 tk.Button(self.root, text="Consultal Historial de Citas", command="",font=("ADLaM Display",10)).pack(pady=5)
                 tk.Button(self.root, text="salir", command="",font=("ADLaM Display",10)).pack(pady=5)
             
-            def registrar_cliente():
-                pass
+            def registrar_cliente(self):
+                self.clear_window()
+
+                tk.Label(self.root, text="Registrar Clientes", font=("Arial Black", 16)).pack(pady=10)
+
+                tk.Label(self.root, text="Nombre: ", font=("ADLaM Display", 10)).pack(pady=5)
+                nombre_entry = tk.Entry(self.root)
+                nombre_entry.pack(pady=5)
+
+                tk.Label(self.root, text="Contacto: ", font=("ADLaM Display", 10)).pack(pady=5)
+                contacto_entry = tk.Entry(self.root)
+                contacto_entry.pack(pady=5)
+
+                tk.Label(self.root, text="Direccion: ", font=("ADLaM Display", 10)).pack(pady=5)
+                direccion_entry = tk.Entry(self.root)
+                direccion_entry.pack(pady=5)
+
+                def submit_cliente():
+                    nombre = nombre_entry.get()
+                    contacto = contacto_entry.get()
+                    direccion = direccion_entry.get()
+                    registrar_cliente(nombre, contacto, direccion)
+                    self.registrar_mascota
+                
+                tk.Button(self.root, text="Registrar Cliente", command=submit_cliente).pack(pady=20)
+                tk.Button(self.root, text="Regresar al Menu", command=self.main_menu).pack(pady=20)
+
+            
+            def registrar_mascota(self):
+                self.clear_window()
+
+                tk.Label(self.root, text="Registrar Mascota", font=("Arial Black", 16)).pack(pady=10)
+
+                tk.Label(self.root, text="Id Cliente: ", font=("ADLaM Display", 10)).pack(pady=5)
+                cliente_id_entry = tk.Entry(self.root)
+                cliente_id_entry.pack(pady=5)
+
+                tk.Label(self.root, text="Nombre de la Mascota: ", font=("ADLaM Display", 10)).pack(pady=5)
+                nombre_mascota_entry = tk.Entry(self.root)
+                nombre_mascota_entry.pack(pady=5)
+
+                #combobox nos sirve para hacer que un espacio tenga multiples opciones para escoger
+                tk.Label(self.root, text="Especie: ", font=("ADLaM Display", 10)).pack(pady=5)
+                especie_combobox = ttk.Combobox(self.root, values=["Perro","Gato","Conejo","Pajaro","Otros"])
+                especie_combobox.pack(pady=5)
+
+                tk.Label(self.root, text="Raza: ", font=("ADLaM Display", 10)).pack(pady=5)
+                raza_entry = tk.Entry(self.root)
+                raza_entry.pack(pady=5)
+
+                tk.Label(self.root, text="Edad: ", font=("ADLaM Display", 10)).pack(pady=5)
+                edad_entry = tk.Entry(self.root)
+                edad_entry.pack(pady=5)
+
+                def submit_mascota():
+                    cliente_id = int(cliente_id_entry.get())
+                    nombre_mascota = nombre_mascota_entry.get()
+                    especie = especie_combobox.get()
+                    raza = raza_entry.get()
+                    edad = int(edad_entry.get())
+                    registrar_mascota(cliente_id, nombre_mascota, especie, raza, edad)
+                    self.registrar_mascota()
+                
+                tk.Button(self.root, text="Registrar Mascota", command=submit_mascota).pack(pady=20)
+                tk.Button(self.root, text="Regresar al Menu", command=self.main_menu).pack(pady=20)
+                
 
 
 
