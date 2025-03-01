@@ -57,7 +57,7 @@ class SistemaVeterianaria:
             SistemaVeterianaria.Cita.id_counter += 1
 
         #funciones auxiliares
-        def validar_fecha(fecha):
+    def validar_fecha(fecha):
             from datetime import datetime
             try:
                 datetime.strftime(fecha, "%Y-%m-%d")
@@ -65,7 +65,7 @@ class SistemaVeterianaria:
             except ValueError:
                 return False
             
-        def validar_hora(hora):
+    def validar_hora(hora):
             from datetime import datetime
             try:
                 datetime.strftime(hora, "HH:MM")
@@ -74,12 +74,12 @@ class SistemaVeterianaria:
                 return False
 
         #funciones del sistema
-        def registrar_cliente(nombre, contacto, direccion):
+    def registrar_cliente(nombre, contacto, direccion):
             cliente = SistemaVeterianaria.Cliente(nombre, contacto, direccion)
             clientes.append(cliente)
             messagebox.showinfo("Exito",f"Cliente registrado con exito. ID: {cliente.id}")
 
-        def registrar_mascota(cliente_id, nombre_mascota, especie, raza, edad ):
+    def registrar_mascota(cliente_id, nombre_mascota, especie, raza, edad ):
             cliente = next((c for c in clientes if c.id == cliente_id), None)
 
             if not cliente:
@@ -92,7 +92,7 @@ class SistemaVeterianaria:
 
             messagebox.showinfo("Exito",f"Mascota registrada con exito, ID : {mascota.id}")
         
-        def programar_cita():
+    def programar_cita():
             cliente_id = int(input("Ingrese el ID del cliente: ").strip())
             cliente = next((c for c in clientes  if c.id == cliente_id),None)
 
@@ -108,12 +108,12 @@ class SistemaVeterianaria:
                 return
             
             fecha = input("Ingrese la fecha de la cita(YYYY-MM-DD): ").strip()
-            while not validar_fecha(fecha):
+            while not SistemaVeterianaria.validar_fecha(fecha):
                 print("Fecha invalida, Por favor digite el formato indicado (YYYY-MM-DD)")
             fecha = input("Ingrese la fecha de la cita(YYYY-MM-DD): ").strip()
 
             hora = input("Ingrese la hora  de la cita (HH:MM): ").strip()
-            while not validar_hora(hora):
+            while not SistemaVeterianaria.validar_hora(hora):
                 print("Hora invalida, Por favor digite el formato indicado (HH:MM))")
 
             servicio = input("Ingrese el servicio (Consultoria, Vacunacion, etc..): ").strip()            
@@ -123,7 +123,7 @@ class SistemaVeterianaria:
             mascota.agregar_cita(cita)
             print("Cita agendada")
             
-        def consultar_historial():
+    def consultar_historial():
 
             print("Consultar historial de citas ")
 
@@ -144,7 +144,7 @@ class SistemaVeterianaria:
             mascota.mostrar_historial()
 
         #intefaz de usuario (tkinter)
-        class VeterinariaApp:
+class VeterinariaApp:
             def __init__(self, root):
                 self.root = root
                 self.root.title("Sistema Veterinaria")
@@ -187,11 +187,11 @@ class SistemaVeterianaria:
                 direccion_entry = tk.Entry(self.root)
                 direccion_entry.pack(pady=5)
 
-                def submit_cliente():
+                def submit_cliente(self):
                     nombre = nombre_entry.get()
                     contacto = contacto_entry.get()
                     direccion = direccion_entry.get()
-                    registrar_cliente(nombre, contacto, direccion)
+                    SistemaVeterianaria.registrar_cliente(nombre, contacto, direccion)
                     self.registrar_mascota
                 
                 tk.Button(self.root, text="Registrar Cliente", command=submit_cliente).pack(pady=20)
@@ -230,7 +230,7 @@ class SistemaVeterianaria:
                     especie = especie_combobox.get()
                     raza = raza_entry.get()
                     edad = int(edad_entry.get())
-                    registrar_mascota(cliente_id, nombre_mascota, especie, raza, edad)
+                    SistemaVeterianaria.registrar_mascota(cliente_id, nombre_mascota, especie, raza, edad)
                     self.registrar_mascota()
                 
                 tk.Button(self.root, text="Registrar Mascota", command=submit_mascota).pack(pady=20)
@@ -238,9 +238,8 @@ class SistemaVeterianaria:
                 
 
 
-
-        root = tk.Tk()
-        app = VeterinariaApp(root)
-        root.mainloop()
+root = tk.Tk()
+app = VeterinariaApp(root)
+root.mainloop()
 
 

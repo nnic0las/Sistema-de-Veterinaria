@@ -19,7 +19,7 @@ class SistemaVeterianaria:
             self.mascotas = []
 
         def agregar_mascota(self, mascota):
-            self.mascota.append(mascota)
+            self.mascotas.append(mascota)
 
     class Mascota:
         id_counter = 1
@@ -58,24 +58,24 @@ class SistemaVeterianaria:
             SistemaVeterianaria.Cita.id_counter += 1
 
         #funciones auxiliares
-        def validar_fecha(fecha):
+    def validar_fecha(fecha):
             from datetime import datetime
             try:
-                datetime.strftime(fecha, "%Y-%m-%d")
+                datetime.strptime(fecha, "%Y-%m-%d")
                 return True
             except ValueError:
                 return False
             
-        def validar_hora(hora):
+    def validar_hora(hora):
             from datetime import datetime
             try:
-                datetime.strftime(hora, "HH:MM")
+                datetime.strptime(hora, "HH:MM")
                 return True
             except ValueError:
                 return False
 
         #funciones del sistema
-        def registrar_cliente():
+    def registrar_cliente():
             print("-_-_-_-_REGISTRO DE CLIENTES_-_-_-_-")
             nombre = input("por favor ingrese el nombre del cliente: ").strip()
             contacto = input("por favor ingrese el contaco del cliente: ").strip()
@@ -84,7 +84,7 @@ class SistemaVeterianaria:
             clientes.append(cliente)
             print(f"Cliente registrado con exito. ID: {cliente.id}")
 
-        def registrar_mascota():
+    def registrar_mascota():
             print("--------REGISTRO DE MASCOTAS--------")
 
             cliente_id = int(input("Ingrese el ID del cliente para vincular a la mascota: ").strip())
@@ -105,7 +105,7 @@ class SistemaVeterianaria:
             mascotas.append(mascota)
             print(f"Mascota registrada con exito, ID : {mascota.id}")
         
-        def programar_cita():
+    def programar_cita():
             cliente_id = int(input("Ingrese el ID del cliente: ").strip())
             cliente = next((c for c in clientes  if c.id == cliente_id),None)
 
@@ -121,12 +121,12 @@ class SistemaVeterianaria:
                 return
             
             fecha = input("Ingrese la fecha de la cita(YYYY-MM-DD): ").strip()
-            while not validar_fecha(fecha):
+            while not SistemaVeterianaria.validar_fecha(fecha):
                 print("Fecha invalida, Por favor digite el formato indicado (YYYY-MM-DD)")
             fecha = input("Ingrese la fecha de la cita(YYYY-MM-DD): ").strip()
 
             hora = input("Ingrese la hora  de la cita (HH:MM): ").strip()
-            while not validar_hora(hora):
+            while not SistemaVeterianaria.validar_hora(hora):
                 print("Hora invalida, Por favor digite el formato indicado (HH:MM))")
 
             servicio = input("Ingrese el servicio (Consultoria, Vacunacion, etc..): ").strip()            
@@ -136,7 +136,7 @@ class SistemaVeterianaria:
             mascota.agregar_cita(cita)
             print("Cita agendada")
             
-        def consultar_historial():
+    def consultar_historial():
 
             print("Consultar historial de citas ")
 
@@ -156,7 +156,7 @@ class SistemaVeterianaria:
             
             mascota.mostrar_historial()
 
-        def menu_principal():
+    def menu_principal():
             while True:
                 print("=-=-=-=-Menu principal-=-=-=-=")
                 print("1. Registrar cliente")
@@ -167,11 +167,11 @@ class SistemaVeterianaria:
                 opc = input("Seleccione una opcion: ").strip()
 
                 if opc == "1":
-                    registrar_cliente()
+                    SistemaVeterianaria.registrar_cliente()
                 elif opc == "2":
-                    registrar_mascota()
+                    SistemaVeterianaria.registrar_mascota()
                 elif opc == "3":
-                    programar_cita()
+                    SistemaVeterianaria.programar_cita()
                 elif opc == "4":
                     pass
                 elif opc == "5":
@@ -180,4 +180,4 @@ class SistemaVeterianaria:
                     print("Opcion no valida.")
                     print("Por favor digite una de las occiones dentro del menu...")
 
-        menu_principal()
+SistemaVeterianaria.menu_principal()
