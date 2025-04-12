@@ -61,7 +61,7 @@ class SistemaVeterianaria:
     def validar_fecha(fecha):
             from datetime import datetime
             try:
-                datetime.strptime(fecha, "%Y-%m-%d")
+                datetime.strptime(fecha, "%d/%m/%Y")
                 return True
             except ValueError:
                 return False
@@ -69,7 +69,7 @@ class SistemaVeterianaria:
     def validar_hora(hora):
             from datetime import datetime
             try:
-                datetime.strptime(hora, "HH:MM")
+                datetime.strptime(hora, "%H:%M")
                 return True
             except ValueError:
                 return False
@@ -120,10 +120,9 @@ class SistemaVeterianaria:
                 print("mascota no encontrada")
                 return
             
-            fecha = input("Ingrese la fecha de la cita(YYYY-MM-DD): ").strip()
+            fecha = input("Ingrese la fecha de la cita(DD/MM/YYYY): ").strip()
             while not SistemaVeterianaria.validar_fecha(fecha):
                 print("Fecha invalida, Por favor digite el formato indicado (YYYY-MM-DD)")
-            fecha = input("Ingrese la fecha de la cita(YYYY-MM-DD): ").strip()
 
             hora = input("Ingrese la hora  de la cita (HH:MM): ").strip()
             while not SistemaVeterianaria.validar_hora(hora):
@@ -173,7 +172,7 @@ class SistemaVeterianaria:
                 elif opc == "3":
                     SistemaVeterianaria.programar_cita()
                 elif opc == "4":
-                    pass
+                    SistemaVeterianaria.consultar_historial()
                 elif opc == "5":
                     break
                 else:
